@@ -1,13 +1,13 @@
 {
   "tests": [
     {
-      "name": "Test suite",
+      "name": "Queue Tasks",
       "setup": "",
       "run": "make test",
       "input": "",
       "output": "",
       "comparison": "included",
-      "timeout": 10,
+      "timeout": 1,
       "points": null
     }
   ]
