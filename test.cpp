@@ -73,11 +73,11 @@ TEST_CASE( "4: Island" ) {
     std::vector<std::vector<int>> moreIslands1 =
     {
         { 1, 0, 1},
-	{ 0, 0, 0},
-	{ 0, 1, 1},
-	{ 1, 0, 0},
-	{ 1, 0, 1},
-	{ 1, 0, 0}
+	    { 0, 0, 0},
+	    { 0, 1, 1},
+	    { 1, 0, 0},
+	    { 1, 0, 1},
+	    { 1, 0, 0}
     };
 	REQUIRE( islands(moreIslands1) == 5 );
 

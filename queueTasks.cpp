@@ -189,6 +189,10 @@ unsigned int islands(const std::vector<std::vector<int>>& g) {
         }
     }
 
+    //The row and col offsets for the adjacent tiles
+    std::vector<int> adjacentTiles_RowOffsets = std::vector<int>{ -1, 0, 1, 0 };
+    std::vector<int> adjacentTiles_ColOffsets = std::vector<int>{ 0, 1, 0, -1 };
+
     int countOfIslands = 0;
 
     for (int i = 0; i < gCopy.size(); i++)
@@ -207,31 +211,21 @@ unsigned int islands(const std::vector<std::vector<int>>& g) {
                     nextToCheck.pop();
                     gCopy[currentTileX][currentTileY] = 2;
 
-                    //Check the adjacent tiles
-                    //Check left tile
-                    int adjacentTileX = currentTileX;
-                    int adjacentTileY = currentTileY-1;
-                    auto tileInBounds = [gCopy, i, &adjacentTileX, &adjacentTileY]()
+                    //Make lambda function for checking if coords are inside boundaries of map
+                    auto tileInBounds = [gCopy, i](int adjacentTileX, int adjacentTileY)
                     {
                         return adjacentTileX >= 0 && adjacentTileX < gCopy.size() && adjacentTileY >= 0 && adjacentTileY < gCopy[i].size();
                     };
-                        
-                    if (tileInBounds() && gCopy[adjacentTileX][adjacentTileY] == 1) nextToCheck.push(std::vector<int>{adjacentTileX, adjacentTileY});
 
-                    //Check right tile
-                    adjacentTileX = currentTileX;
-                    adjacentTileY = currentTileY+1;
-                    if (tileInBounds() && gCopy[adjacentTileX][adjacentTileY] == 1) nextToCheck.push(std::vector<int>{adjacentTileX, adjacentTileY});
+                    //Check the adjacent tiles
+                    for (size_t z = 0; z < 4; z++)
+                    {
+                        int adjacentTileX = currentTileX + adjacentTiles_RowOffsets[z];
+                        int adjacentTileY = currentTileY + adjacentTiles_ColOffsets[z];
 
-                    //Check upper tile
-                    adjacentTileX = currentTileX - 1;
-                    adjacentTileY = currentTileY;
-                    if (tileInBounds() && gCopy[adjacentTileX][adjacentTileY] == 1) nextToCheck.push(std::vector<int>{adjacentTileX, adjacentTileY});
-
-                    //Check lower tile
-                    adjacentTileX = currentTileX + 1;
-                    adjacentTileY = currentTileY;
-                    if (tileInBounds() && gCopy[adjacentTileX][adjacentTileY] == 1) nextToCheck.push(std::vector<int>{adjacentTileX, adjacentTileY});
+                        if (tileInBounds(adjacentTileX, adjacentTileY) && gCopy[adjacentTileX][adjacentTileY] == 1) nextToCheck.push(std::vector<int>{adjacentTileX, adjacentTileY});
+                    }
+                    
                 }
 
                 countOfIslands++;
