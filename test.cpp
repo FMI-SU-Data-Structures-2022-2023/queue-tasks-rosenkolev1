@@ -6,15 +6,29 @@
 TEST_CASE( "1: Kittens" ) {
     REQUIRE( kittens("BB", 3) == 3 );
     REQUIRE( kittens("SSBB", 3) == 2 );
+    REQUIRE(kittens("SOOSBBOOOOSOOOSBOSOOBOSOSOOBOSOSOOB", 7) == 3);
     REQUIRE( kittens("SSBBOOOOOOOSBOOOOOOOOOSB", 5) == 1 );
-    REQUIRE( kittens("SOOSBBOOOOSOOOSBOOOBOOSOOBOOSOOB", 7) == 3 );
+    //REQUIRE( kittens("SOOSBBOOOOSOOOSBOOOBOOSOOBOOSOOB", 7) == 3 );
+    //SOOSBBOOOOSOOOSBOOOBOOSOOBOOSOOB (0, 0, 0, 0, 0, 0, 0)
+    //BOOOOSOOOSBOOOBOOSOOBOOSOOB 5 (1, 0, 0, 1, -1, 0, 0)
+    //OOOOSOOOSBOOOBOOSOOBOOSOOB 6 (1, 0, 0, 1, -1, -1, 0) 
+    //OOOBOOSOOBOOSOOBB 4 (1, 0, 1, 1, -1, -1, 0) 
+    //OOSOOBOOSOOBBB  3 (1, 0, 0, 1, -1, -1, 0)
+    //OOSOOBBBB  4 (2, 0, 0, 0, -1, -1, 0)
+    //BBB  7 (2, 1, 0, 0, -1, -1, -1)
+    //BBB  1 (1, 1, 0, 0, -1, -1, -1)
+    //BBB  2 (1, 0, 0, 0, -1, -1, -1)
+    //BB  3 (1, 0, -1, 0, -1, -1, -1)
+    //B  4 (1, 0, -1, -1, -1, -1, -1)
+    //B  1 (0, 0, -1, -1, -1, -1, -1)
+    //  2 (0, -1, -1, -1, -1, -1, -1)
 }
 
 TEST_CASE( "2: BFS" ) {
-    std::vector<vector<int>> g;
-    vector<int> first = {1, 2};
-    vector<int> second = {0, 2, 3, 6};
-    vector<int> empty;
+    std::vector<std::vector<int>> g;
+    std::vector<int> first = {1, 2};
+    std::vector<int> second = {0, 2, 3, 6};
+    std::vector<int> empty;
     g.push_back(first);  // 0
     g.push_back(second); // 1
     g.push_back(empty);  // 2
@@ -29,23 +43,34 @@ TEST_CASE( "2: BFS" ) {
 }
 
 TEST_CASE( "3: Horse" ) {
+    //Svilen tests
     REQUIRE( horse("A1", "B3") == 1 );
+
+    //My tests
+    REQUIRE(horse("A1", "A1") == 0);
+    REQUIRE(horse("A1", "A2") == 3);
+    REQUIRE(horse("A1", "B2") == 4);
+    REQUIRE(horse("A1", "A3") == 2);
+    REQUIRE(horse("A1", "C3") == 4);
 }
 
 TEST_CASE( "4: Island" ) {
-	vector<vector<int>> zeroIslands =
+
+	std::vector<std::vector<int>> zeroIslands =
     {
         { 0, 0, 0},
         { 0, 0, 0}
     };
 	REQUIRE( islands(zeroIslands) == 0 );
-	vector<vector<int>> moreIslands =
+
+    std::vector<std::vector<int>> moreIslands =
     {
         { 1, 0, 1},
         { 0, 1, 0}
     };
 	REQUIRE( islands(moreIslands) == 3 );
-	vector<vector<int>> moreIslands1 =
+
+    std::vector<std::vector<int>> moreIslands1 =
     {
         { 1, 0, 1},
 	{ 0, 0, 0},
@@ -55,4 +80,16 @@ TEST_CASE( "4: Island" ) {
 	{ 1, 0, 0}
     };
 	REQUIRE( islands(moreIslands1) == 5 );
+
+    //This test is mine
+    std::vector<std::vector<int>> moreIslands2 =
+    {
+        { 1, 0, 1},
+        { 0, 0, 0},
+        { 0, 1, 1},
+        { 1, 0, 0},
+        { 1, 1, 1},
+        { 1, 1, 0}
+    };
+    REQUIRE(islands(moreIslands2) == 4);
 }
